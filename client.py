@@ -18,19 +18,34 @@ res = []
 try:
     contact_info = client.get_entity(contact_phone_number)
     res.append(contact_info.phone)
-    res.append(contact_info.id)
+    userid = contact_info.id
+    res.append(userid)
     res.append(contact_info.username)
-    res.append(contact_info.first_name)
-    res.append(contact_info.last_name)
-    res.append(client.download_profile_photo(contact_info.id))
     try:
-        res.append(contact_info.status.was_online.astimezone(pytz.timezone('Europe/Kiev')))
+        UsrInfo = bot.get_chat_member(userid, userid).user
+        res.append(UsrInfo.first_name)
+        res.append(UsrInfo.last_name)
+        res.append(UsrInfo.language_code)
     except:
-        res.append("None")
-except:
+        res.append(contact_info.first_name)
+        res.append(contact_info.last_name)
+        res.append(contact_info.lang_code)
+    res.append(client.download_profile_photo(contact_info.id))
+    if hasattr(contact_info.status, "was_online"):
+        res.append(contact_info.status.was_online.astimezone(pytz.timezone('Europe/Kiev')))
+    else:
+        res.append("Online")
+except Exception as err:
+    print(err)
     bot.send_message(chatId, "Nomer nezaregan ili scrut")
     exit()
-bot.send_message(chatId, "Number\tID\tUsername\tFirst_name\tLast_name\tPhoto\tLast_Online\n\n" + '\t'.join(str(x) for x in res))
+
+
+masName = ["Number", "ID", "Username", "First_name", "Last_name", "language_code", "Photo", "Last_Online"]
+resultString = ""
+for i in range(len(masName)):
+        resultString += str(masName[i]) + ": " + str(res[i]) + "\n"
+bot.send_message(chatId, resultString)
 if res[5] != None:
-    bot.send_photo(chatId, open(res[5], "rb"))
-    os.remove(res[5])
+    bot.send_photo(chatId, open(res[6], "rb"))
+    os.remove(res[6])
