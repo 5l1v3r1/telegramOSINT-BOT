@@ -19,8 +19,8 @@ def send_text(message):
         bot.send_message(message.chat.id, 'False')
         exit()
     if re.match(r"^((8|\+\d{1})[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$", message.text) != None:
-        subprocess.run(["python", "client.py", message.text, str(message.chat.id)], stdout=subprocess.DEVNULL)
-        #subprocess.run(["python", "client.py ", message.text, str(message.chat.id)])
+        subprocess.run(["python3", "client.py", message.text, str(message.chat.id)], stdout=subprocess.DEVNULL)
+        #subprocess.run(["python3", "client.py", message.text, str(message.chat.id)])
     elif message.text:
         bot.send_message(message.chat.id, "wrong number, re-enter")
 
