@@ -46,6 +46,6 @@ resultString = ""
 for i in range(len(masName)):
         resultString += str(masName[i]) + ": " + str(res[i]) + "\n"
 bot.send_message(chatId, resultString)
-if res[5] != None:
+if res[6] != None:
     bot.send_photo(chatId, open(res[6], "rb"))
     os.remove(res[6])
