@@ -42,8 +42,6 @@ except Exception as err:
     bot.send_message(chatId, "Nomer nezaregan ili scrut")
     exit()
 
-bot.send_message(chatId, "[This is an example](https://example.com)", parse_mode="Markdown")
-
 masName = ["*Number: *+", "*Telegram ID: *", "*Username: *", "*First_name: *", "*Last_name: *", "*language_code: *", "*Last_Online: *"]
 resultString = ""
 for i in range(len(masName)):
